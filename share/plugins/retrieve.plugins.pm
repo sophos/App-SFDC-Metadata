@@ -1,5 +1,5 @@
 #!perl
-package App::SFDC::Retrieve;
+package App::SFDC::Command::Retrieve;
 use strict;
 use warnings;
 use 5.10.0;
