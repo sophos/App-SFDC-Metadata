@@ -1,5 +1,10 @@
-# PODNAME: App::SFDC::Metadata
+package App::SFDC::Metadata;
 # ABSTRACT: Metadata tools module for App::SFDC
+use strict;
+use warnings;
+# VERSION
+1;
+__END__
 
 =head1 DESCRIPTION
 
