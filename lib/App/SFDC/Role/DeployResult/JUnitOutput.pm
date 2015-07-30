@@ -12,9 +12,7 @@ use Moo::Role;
 
 sub _printTestSuccesses {
     my ($self, $FH) = @_;
-    return
-        unless $self->result->{runTestsEnabled} eq 'true'
-        and $self->complete
+    return unless $self->complete
         and exists $self->result->{details}->{runTestResult}->{successes};
     print $FH $_ for map {
         my $time = $$_{time}/1000;
@@ -32,8 +30,7 @@ sub _printTestSuccesses {
 
 sub _printTestFailures {
     my ($self, $FH) = @_;
-    return
-        unless $self->result->{runTestsEnabled} eq 'true';
+    return unless $self->testFailures;
     print $FH $_ for map {
         my $time = $$_{time}/1000;
         "   <testcase
@@ -57,6 +54,8 @@ Accepts a filename and prints JUnit-formatted test results to that file.
 
 sub printToJUnit {
   my ($self, $fileName) = @_;
+
+  return unless $self->result->{runTestsEnabled} eq 'true';
   INFO "Writing test results to $fileName";
   open my $FH, '>', $fileName
     or ERROR "Couldn't open $fileName for writing: $!";
