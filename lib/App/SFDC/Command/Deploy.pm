@@ -197,7 +197,7 @@ has '_result',
 
 sub _JUnitOutput {
     my $self = shift;
-    return unless $self->testoutput and $self->runtests;
+    return unless $self->testoutput and ($self->result->{runTestsEnabled} eq 'true');
     Role::Tiny->apply_roles_to_object(
         $self->_result,
         'App::SFDC::Role::DeployResult::JUnitOutput'
