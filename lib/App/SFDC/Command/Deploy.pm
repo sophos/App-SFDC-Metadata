@@ -103,6 +103,7 @@ namespace. This has no effect on Production, and doesn't work before API v34.0
 =cut
 
 option 'runtests',
+    doc => 'Defaults to off, turn on by setting to 1',
     short => 't',
     is => 'ro',
     default => 0;
@@ -115,6 +116,7 @@ the test results of this deployment.
 =cut
 
 option 'testoutput',
+    doc => 'Turn on by setting to 1. Results will be written to testoutput.xml.',
     format => 's',
     short => 'o',
     is => 'ro';
