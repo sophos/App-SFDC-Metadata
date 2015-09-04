@@ -116,7 +116,6 @@ the test results of this deployment.
 =cut
 
 option 'testoutput',
-    doc => 'Turn on by setting to 1. Results will be written to testoutput.xml.',
     format => 's',
     short => 'o',
     is => 'ro';
@@ -199,7 +198,8 @@ has '_result',
 
 sub _JUnitOutput {
     my $self = shift;
-    return unless $self->testoutput and ($self->result->{runTestsEnabled} eq 'true');
+
+    return unless $self->testoutput and ($self->_result->result->{runTestsEnabled} eq 'true');
     Role::Tiny->apply_roles_to_object(
         $self->_result,
         'App::SFDC::Role::DeployResult::JUnitOutput'

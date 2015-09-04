@@ -16,11 +16,7 @@ sub _printTestSuccesses {
         and exists $self->result->{details}->{runTestResult}->{successes};
     print $FH $_ for map {
         my $time = $$_{time}/1000;
-        "   <testcase
-                name='$$_{methodName}'
-                classname='$$_{name}'
-                time='$time'>
-            </testcase>
+        "<testcase>\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'\n</testcase>
         "} (
             ref $self->result->{details}->{runTestResult}->{successes} eq 'ARRAY'
                 ? @{$self->result->{details}->{runTestResult}->{successes}}
@@ -32,18 +28,12 @@ sub _printTestFailures {
     my ($self, $FH) = @_;
     return unless $self->testFailures;
     print $FH $_ for map {
-        my $time = $$_{time}/1000;
-        "   <testcase
-                name='$$_{methodName}'
-                classname='$$_{name}'
-                time='$time'>
-                <failure>
-                    <![CDATA[$$_{stackTrace}\n$$_{message}]]>
-                </failure>
-            </testcase>
-        "} @{
-            $self->testFailures
-        };
+      my $time = $$_{time}/1000;
+      "\n<testcase>\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'\n\t<failure>\n\t\t<![CDATA: $$_{message}]>\n\t</failure>\n</testcase>"} 
+    @{
+      $self->testFailures
+    };
+
 }
 
 =method printToJUnit
