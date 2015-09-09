@@ -99,7 +99,7 @@ option 'manifest',
         }
     };
 
-my @folders;
+our @folders;
 
 has '_manifest',
     is => 'ro',
@@ -116,9 +116,15 @@ has '_manifest',
 
         $manifest->readFromFile($_) for @{$self->manifest};
 
-        $manifest->addList(
-            $self->_session->Metadata->listMetadata(@folders)
-        ) if $self->all and @folders;
+
+        if ($self->all and @folders) {
+
+            DEBUG "Searching for folder contents: " . Dumper @folders;
+
+            $manifest->addList(
+                $self->_session->Metadata->listMetadata(@folders)
+            ) 
+        }
 
         return $manifest;
     };
