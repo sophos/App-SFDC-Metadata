@@ -16,8 +16,8 @@ sub _printTestSuccesses {
         and exists $self->result->{details}->{runTestResult}->{successes};
     print $FH $_ for map {
         my $time = $$_{time}/1000;
-        "\n<testcase>\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'\n</testcase>
-        "} (
+        "\n<testcase\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'>\n</testcase>"} 
+        (
             ref $self->result->{details}->{runTestResult}->{successes} eq 'ARRAY'
                 ? @{$self->result->{details}->{runTestResult}->{successes}}
                 : $self->result->{details}->{runTestResult}->{successes}
@@ -29,7 +29,7 @@ sub _printTestFailures {
     return unless $self->testFailures;
     print $FH $_ for map {
       my $time = $$_{time}/1000;
-      "\n<testcase>\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'\n\t<failure>\n\t\t<![CDATA[$$_{message}]]>\n\t</failure>\n</testcase>"} 
+      "\n<testcase\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'>\n\t<failure>\n\t\t<![CDATA[$$_{message}]]>\n\t</failure>\n</testcase>"} 
     @{
       $self->testFailures
     };
@@ -50,10 +50,10 @@ sub printToJUnit {
   open my $FH, '>', $fileName
     or ERROR "Couldn't open $fileName for writing: $!";
   print $FH '<?xml version="1.0" encoding="UTF-8"?>';
-  print $FH '<testsuite name="SFDC Unit Tests">';
+  print $FH "\n".'<testsuite name="SFDC Unit Tests">';
   $self->_printTestSuccesses($FH);
   $self->_printTestFailures($FH);
-  print $FH '</testsuite>';
+  print $FH "\n".'</testsuite>';
 }
 
 1;
