@@ -29,7 +29,9 @@ sub _printTestFailures {
     return unless $self->testFailures;
     print $FH $_ for map {
       my $time = $$_{time}/1000;
-      "\n<testcase\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'>\n\t<failure>\n\t\t<![CDATA[$$_{message}]]>\n\t</failure>\n</testcase>"} 
+      my $stacktrace = '';
+      $stacktrace = $$_stackTrace if defined($$_stackTrace);
+      "\n<testcase\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'>\n\t<failure>\n\t\t<![CDATA[$stackTrace]$$_{message}]>\n\t</failure>\n</testcase>"} 
     @{
       $self->testFailures
     };
