@@ -31,8 +31,9 @@ sub _printTestFailures {
       my $time = $$_{time}/1000;
       my $stackTrace = '';
       $stackTrace = $$_{stackTrace} if (defined($$_{stackTrace}));
-      DEBUG $stackTrace;
-      "\n<testcase\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'>\n\t<failure>\n\t\t<![CDATA[$stackTrace]$$_{message}]>\n\t</failure>\n</testcase>"} 
+      my $message = $$_{message};
+      $message = $message.'[]' unless (substr ($$_message, -1) eq ']');
+      "\n<testcase\n\tname='$$_{methodName}'\n\tclassname='$$_{name}'\n\ttime='$time'>\n\t<failure>\n\t\t<![CDATA[$stackTrace]$message]>\n\t</failure>\n</testcase>"} 
     @{
       $self->testFailures
     };
